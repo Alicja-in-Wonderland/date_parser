@@ -70,6 +70,12 @@ fn main() {
     // 3)
     // zadecyduj o odpowiednich zmiennych w których przechowamy ODDZIELNIE dane
     // weekday, day, month, year
+    let weekday: u8 = split_date[0].parse().unwrap();
+    let day: u8 = split_date[1].parse().unwrap();
+    let month: u8 = split_date[2].parse().unwrap();
+    let year: u16 = split_date[3].parse().unwrap();
+
+    // let (weekday, day, month, year): (u8, u8, u8, u16) = (split_date[0].parse().unwrap(), split_date[1].parse().unwrap(), split_date[2].parse().unwrap(), split_date[3].parse().unwrap())
 
     // 4)
     // wyodrębnij te dane z tego, co użytkownik podał
