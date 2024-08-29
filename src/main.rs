@@ -17,32 +17,32 @@ fn main() {
     let mut buffered_data = String::new();
 
     // 0)
-    // zapytaj użytkownika o język interfejsu, bazując na wyborze
-    //  będziemy (później) wyświetlać informacje w odpowiednim języku
-    println!("Choose interface language: EN / PL");
+    // Asks user to choose interface language between English and Polish,
+    //  depending on the selection, info will be displayed in the chosen language
+    println!("Choose interface language / Wybierz język interfejsu: EN / PL");
     input_handle.read_line(&mut buffered_data);
 
-    // notatka:
-    //      jeśli użytkownik nie wpisze EN ani PL
-    //      to uzyska stosowną informację
+    // Note:
+    //      If user doesn't type EN nor PL
+    //      they will receive a notification 
 
     if (buffered_data.trim() != "EN") && (buffered_data.trim() != "PL") {
-        println!("WRONG ANSWER ASSHOLE.");
+        println!("WRONG ANSWER. Bye");
         return;
     }
 
     // 1)
-    // poproś użytkownika żeby podał datę w jakimś formacie. np. W:DD:MM:YYYY,
-    // gdzie W - weekday, DD - day, MM - month, YYYY - year
+    // Asks user to type a date in a given numerical format: W:DD:MM:YYYY,
+    // where W - weekday, DD - day, MM - month, YYYY - year
     println!("Give a date in numerical format W:DD:MM:YYYY (where: W - weekday, DD - day, MM - month, YYYY - year):");
 
     buffered_data.clear();
     input_handle.read_line(&mut buffered_data);
 
     // 2)
-    // sprawdź czy dane są w poprawnym formacie
-    // wypisz to, co użytkownik podał
+    // Checks if user input is in the correct format and prints it
     let split_date: Vec<&str> = buffered_data.trim().split(":").collect();
+
 
     // let trimmed_data: &str =
     //   trim(buffered_data); // shorthand: buffered_data.trim() -> &str
@@ -52,24 +52,24 @@ fn main() {
     //   collect(split_iterator); // shorthand: split_iterator.collect() -> Vec<&str>
 
     println!("{:?}", split_date);
-    let weekday = split_date[0].to_lowercase();
+    let weekday = split_date[0];
 
     println!("{weekday}");
 
     let weekdays = [
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-        "sunday",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
     ];
-    let contains = weekdays.contains(&weekday.as_str());
+    let contains = weekdays.contains(&weekday);
 
     // 3)
-    // zadecyduj o odpowiednich zmiennych w których przechowamy ODDZIELNIE dane
-    // weekday, day, month, year
+    // Declaring variables to store data in: weekday, day, month and year
+
     let weekday: u8 = split_date[0].parse().unwrap();
     let day: u8 = split_date[1].parse().unwrap();
     let month: u8 = split_date[2].parse().unwrap();
@@ -78,9 +78,9 @@ fn main() {
     // let (weekday, day, month, year): (u8, u8, u8, u16) = (split_date[0].parse().unwrap(), split_date[1].parse().unwrap(), split_date[2].parse().unwrap(), split_date[3].parse().unwrap())
 
     // 4)
-    // wyodrębnij te dane z tego, co użytkownik podał
+    // Extracts data from user's input
 
-    // 5) zapytaj w jakim języku i w jakim formacie użytkownik chce zobaczyć output
+    // 5) Asks in what language and format the user wants to see the output
 
-    // 6) wypisz przygotowaną informację
+    // 6) Prints prepared information
 }
