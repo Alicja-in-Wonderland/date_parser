@@ -1,4 +1,6 @@
 use crate::INPUT_ERROR;
+
+#[derive(Debug)]
 pub enum Weekday {
     Mon,
     Tue,
@@ -52,6 +54,7 @@ impl Weekday {
     }
 }
 
+#[derive(Debug)]
 pub enum Month {
     January,
     February,

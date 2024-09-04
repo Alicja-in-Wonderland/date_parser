@@ -14,7 +14,6 @@
 use aa_date_parser::*;
 use std::io::stdin;
 
-
 fn main() {
     let input_handle = stdin();
 
@@ -28,12 +27,12 @@ fn main() {
     println!("{}", localised_text::INPUT_DATE_PROMPT);
     // fn get_date() -> DANE {...}
     // dane <- get_date(&input_handle);
-    
+
     let obtained_date = get_date(&input_handle);
-    
+
     // 4) Asks in what format the user wants to see the output
     println!("{}", localised_text::OUTPUT_FORMAT_SELECTION_PROMPT);
-    
+
     let mut buffered_data = String::new();
     buffered_data.clear();
     input_handle.read_line(&mut buffered_data);
@@ -42,13 +41,9 @@ fn main() {
 
     // 5) output in correct format
     if selected_output_format == "us" {
-        
-        
-
+        println!("{:?}, {:?} {}, {}", obtained_date.0, obtained_date.2, obtained_date.1, obtained_date.3);
     } else if selected_output_format == "en" {
-
-        
-
+        println!("{:?}, {} {:?} {}", obtained_date.0, obtained_date.1, obtained_date.2, obtained_date.3);
     } else {
         panic!("Selected output format does not exsist.");
     }
