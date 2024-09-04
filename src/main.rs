@@ -14,37 +14,41 @@
 use aa_date_parser::*;
 use std::io::stdin;
 
+
 fn main() {
     let input_handle = stdin();
 
-    // 0) Get preffered language
+    // 0) Get user's preferred language
     println!("{}", aa_date_parser::LANGUAGE_SELECTION_PROMPT);
-    let language = get_preferred_language(&input_handle).expect(INPUT_ERROR);
+    let language = get_preferred_language(&input_handle);
 
-    match language {
-        Language::English => {
-            get_date(&input_handle);
-            // 5) Asks in what format the user wants to see the output
-            println!("Choose output language: EN or PL / Wybierz język: EN lub PL");
-            let mut buffered_data = String::new();
-            buffered_data.clear();
-            input_handle.read_line(&mut buffered_data);
+    // 1) ensure the text is correctly localised
 
-            if (buffered_data.trim() != "EN") && (buffered_data.trim() != "PL") {
-                println!("WRONG ANSWER. Bye");
-                return;
-            }
+    // 2) Get date in format of W:DD:MM:YYYY
+    println!("{}", localised_text::INPUT_DATE_PROMPT);
+    // fn get_date() -> DANE {...}
+    // dane <- get_date(&input_handle);
+    
+    let obtained_date = get_date(&input_handle);
+    
+    // 4) Asks in what format the user wants to see the output
+    println!("Choose output format: US or EN");
+    let mut buffered_data = String::new();
+    buffered_data.clear();
+    input_handle.read_line(&mut buffered_data);
 
-            if buffered_data.trim() == "EN" {
-                println!("Choose output format: US-EN or PL-PL");
-            }
+    let selected_output_format = buffered_data.trim().to_lowercase();
 
-            if buffered_data.trim() == "PL" {
-                println!("Wybierz format daty: US-EN lub PL-PL");
-            }
+    // 5) output in correct format
+    if selected_output_format == "us" {
+        
+        
 
-            // 6) Prints prepared information
-        }
-        _ => println!("FIXME"),
+    } else if selected_output_format == "en" {
+
+        
+
+    } else {
+        panic!("Selected output format does not exsist.");
     }
 }

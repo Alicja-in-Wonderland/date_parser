@@ -1,11 +1,12 @@
 #![allow(warnings)]
 mod date_enums;
 pub mod localised_text;
+mod shit_notes;
 
 pub const LANGUAGE_SELECTION_PROMPT: &str =
     "Choose interface language / Wybierz język interfejsu: EN / PL";
-// pub const LANGUAGE_ERROR: &str = "Language selection string not matching any pattern.";
 pub const INPUT_ERROR: &str = "Invalid input.";
+pub const DEFAULT_INPUT_FORMAT: &str = "W:DD:MM:YYYY";
 
 use date_enums::*;
 use std::io::Stdin;
@@ -14,69 +15,73 @@ pub enum Language {
     Polish,
 }
 
-pub fn get_date(input_handle: &Stdin) -> Result<(), ()> {
-    // get date from keyboard
-    // format: W:DD:MM:YYYY
+pub fn get_date(input_handle: &Stdin) -> (Weekday, i32, Month, i32) {
+    // get date from keyboard - format: W:DD:MM:YYYY.
     let mut character_buffer = String::new();
     input_handle.read_line(&mut character_buffer);
 
-    // 2)
-    // Checks if user input is in the correct format and prints it
+    // split date into chunks, divisor is ":", and collect it to Vec<&str>.
     let split_date: Vec<&str> = character_buffer.trim().split(":").collect();
+    // if length of split_date is different than 4 - the user fucked up.
     if split_date.len() != 4 {
-        return Err(());
+        panic!(
+            "Incorrect format. Required format: {} ",
+            DEFAULT_INPUT_FORMAT
+        );
     }
 
-    let weekday = match split_date[0].parse().expect(INPUT_ERROR) {
-        1 => Weekday::Mon,
-        2 => Weekday::Tue,
-        3 => Weekday::Wed,
-        4 => Weekday::Thu,
-        5 => Weekday::Fri,
-        6 => Weekday::Sat,
-        7 => Weekday::Sun,
-        _ => return Err(()),
-    };
-
-    let day: &str = split_date[1];
-
+    // accesses the 1st element of the vector split_date which is passed to
+    // parse function as an argument, then parse function
+    // converts the string slice to a corresponding variant of the Weekday enum
+    // result of the parse function is bound to a variable weekday
+    let weekday = Weekday::parse(split_date[0]);
     let month = Month::parse(split_date[2]);
 
-    let year: u16 = split_date[3].parse().unwrap();
-    let years: Vec<_> = (1900..=2030).collect();
-    let is_year_correct: bool = years.contains(&year);
-    if !is_year_correct {
-        println!("FIXME");
+    let day: i32 = split_date[1].parse().expect("Invalid day");
+    if !(1 <= day && day <= 31) {
+        panic!("Incorrect day number: {}", day);
     }
 
-    let day: u8 = day.parse().expect("FIXME");
-    let days: Vec<_> = (1..=31).collect();
-    let is_day_correct = days.contains(&day);
-    if !is_day_correct {
-        println!("FIXME");
+    let year: i32 = split_date[3].parse().expect("Invalid year");
+    if !(1900 <= year && year <= 2100) {
+        panic!("Incorrect year number: {}", year);
     }
-    // 4)
-    // Extracts data from user's input
-    Ok(())
+
+    (weekday, day, month, year)
 }
 
-// if selected_language == "en" {
-//     Ok(Language::English)
-// } else if selected_language == "pl" {
-//     Ok(Language::Polish)
-// } else {
-//     Err(())
-// }
-
-pub fn get_preferred_language(input_handle: &Stdin) -> Result<Language, ()> {
+// this function takes a reference to Stdin (standard input stream) handle
+// and declares Language enum as the return value
+pub fn get_preferred_language(input_handle: &Stdin) -> Language {
+    // a new String named 'character_buffer' is initialised to hold the user input
     let mut character_buffer = String::new();
 
+    // this function reads a line of input from the standard input stream (input_handle)
+    // and stores it in 'character_buffer', read_line function appends
+    // a newline character to the buffer
     input_handle.read_line(&mut character_buffer);
+
+    // trim() method removes any leading and trailing whitespace (including the newline character)
+    // to_lowercase() method then converts the input String to lowercase, which is then assigned
+    // to a String type variable 'selected_language'
     let selected_language = character_buffer.trim().to_lowercase();
 
-    match selected_language.as_str() {
-        "en" => Ok(Language::English),
-        "pl" => Ok(Language::Polish),
-        _ => Err(()),
+    // declares a variable named 'language' of type Language
+    let language: Language;
+
+    // as_str() method is called on the String 'selected_language' which returns a string slice
+    // the string slice is compared to values "en" and "pl"
+    if selected_language.as_str() == "en" {
+        // for the 'en' input, assigns the English variant of the Language enum to the 'language' variable.
+        language = Language::English;
+    } else if selected_language.as_str() == "pl" {
+        // for the 'pl' input, assigns the Polish variant of the Language enum to the 'language' variable.
+        language = Language::Polish;
+    } else {
+        // if the input does not match either "en" or "pl", the function panics
+        // and the program will terminate
+        panic!("Invalid language selection: {}", selected_language);
     }
+    // the function returns the determined Language enum variant.
+    language
 }
