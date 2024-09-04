@@ -32,7 +32,8 @@ fn main() {
     let obtained_date = get_date(&input_handle);
     
     // 4) Asks in what format the user wants to see the output
-    println!("Choose output format: US or EN");
+    println!("{}", localised_text::OUTPUT_FORMAT_SELECTION_PROMPT);
+    
     let mut buffered_data = String::new();
     buffered_data.clear();
     input_handle.read_line(&mut buffered_data);
