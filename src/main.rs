@@ -18,20 +18,20 @@ fn main() {
     let input_handle = stdin();
 
     // 0) Get user's preferred language
-    println!("{}", aa_date_parser::LANGUAGE_SELECTION_PROMPT);
-    let language = get_preferred_language(&input_handle);
+    println!("{}", localised_text::LANGUAGE_SELECTION_PROMPT);
+    let language_id = get_preferred_language(&input_handle).get_id();
 
     // 1) ensure the text is correctly localised
 
     // 2) Get date in format of W:DD:MM:YYYY
-    println!("{}", localised_text::INPUT_DATE_PROMPT);
+    println!("{}", localised_text::INPUT_DATE_PROMPT[language_id]);
     // fn get_date() -> DANE {...}
     // dane <- get_date(&input_handle);
 
     let obtained_date = get_date(&input_handle);
 
     // 4) Asks in what format the user wants to see the output
-    println!("{}", localised_text::OUTPUT_FORMAT_SELECTION_PROMPT);
+    println!("{}", localised_text::OUTPUT_FORMAT_SELECTION_PROMPT[language_id]);
 
     let mut buffered_data = String::new();
     buffered_data.clear();
@@ -41,9 +41,15 @@ fn main() {
 
     // 5) output in correct format
     if selected_output_format == "us" {
-        println!("{:?}, {:?} {}, {}", obtained_date.0, obtained_date.2, obtained_date.1, obtained_date.3);
-    } else if selected_output_format == "en" {
-        println!("{:?}, {} {:?} {}", obtained_date.0, obtained_date.1, obtained_date.2, obtained_date.3);
+        println!(
+            "{:?}, {:?} {}, {}",
+            obtained_date.0, obtained_date.2, obtained_date.1, obtained_date.3
+        );
+    } else if selected_output_format == "eu" {
+        println!(
+            "{:?}, {} {:?} {}",
+            obtained_date.0, obtained_date.1, obtained_date.2, obtained_date.3
+        );
     } else {
         panic!("Selected output format does not exsist.");
     }

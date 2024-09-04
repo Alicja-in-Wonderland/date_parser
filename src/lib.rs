@@ -1,20 +1,11 @@
 #![allow(warnings)]
 mod date_enums;
 pub mod localised_text;
-mod shit_notes;
-
-pub const LANGUAGE_SELECTION_PROMPT: &str =
-    "Choose interface language / Wybierz język interfejsu: EN / PL";
-pub const INPUT_ERROR: &str = "Invalid input.";
-pub const DEFAULT_INPUT_FORMAT: &str = "W:DD:MM:YYYY";
 
 use date_enums::*;
-use std::io::Stdin;
-pub enum Language {
-    English,
-    Polish,
-}
+use localised_text::*;
 
+use std::io::Stdin;
 pub fn get_date(input_handle: &Stdin) -> (Weekday, i32, Month, i32) {
     // get date from keyboard - format: W:DD:MM:YYYY.
     let mut character_buffer = String::new();
