@@ -13,6 +13,8 @@
 
 use aa_date_parser::*;
 use std::io::stdin;
+use crate::date_formatting::select_format;
+pub mod date_formatting;
 
 fn main() {
     let input_handle = stdin();
@@ -27,44 +29,9 @@ fn main() {
         "{}",
         localised_text::OUTPUT_FORMAT_SELECTION_PROMPT[language_id]
     );
+    let selected_format = select_format(input_handle);
 
-    // this is data type with some implementation, should be elswhere
-    enum OutputFormat {
-        US,
-        EU,
-    }
-    impl OutputFormat {
-        fn get_id(&self) -> usize {
-            match self {
-                OutputFormat::US => 0,
-                OutputFormat::EU => 1,
-            }
-        }
-    }
-
-    // abstract this out to a function:
-    let selected_format = {
-        let mut buffered_data = String::new();
-        buffered_data.clear();
-        input_handle.read_line(&mut buffered_data);
-
-        match buffered_data.trim().to_lowercase().as_str() {
-            "us" => OutputFormat::US,
-            "eu" => OutputFormat::EU,
-            _ => {
-                panic!("Selected output format does not exsist.")
-            }
-        }
-    };
-
-    //a u can also abstract this out to a function
-    let formatted_date = {
-        match selected_format {
-            OutputFormat::US => format!("{0:?}, {2:?} {1}, {3}", weekday, day, month, year),
-            OutputFormat::EU => format!("{0:?}, {1} {2:?} {3}", weekday, day, month, year),
-        }
-    };
-
+    
     // TODO: we still have to show month and weekday in a correct format and language! and we'd like to use default formatter instead of debug one.
-    println!("{formatted_date}");
+    //println!("{formatted_date}");
 }

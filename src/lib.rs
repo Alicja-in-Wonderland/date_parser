@@ -8,6 +8,7 @@ use localised_text::*;
 use non_localised_text::DEFAULT_INPUT_FORMAT;
 
 use std::io::Stdin;
+
 pub fn get_date(input_handle: &Stdin) -> (Weekday, i32, Month, i32) {
     // get date from keyboard - format: W:DD:MM:YYYY.
     let mut character_buffer = String::new();
