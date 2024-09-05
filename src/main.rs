@@ -17,7 +17,7 @@ use std::io::stdin;
 fn main() {
     let input_handle = stdin();
 
-    println!("{}", localised_text::LANGUAGE_SELECTION_PROMPT);
+    println!("{}", non_localised_text::LANGUAGE_SELECTION_PROMPT);
     let language_id = get_preferred_language(&input_handle).get_id();
 
     println!("{}", localised_text::INPUT_DATE_PROMPT[language_id]);

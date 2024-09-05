@@ -1,9 +1,11 @@
 #![allow(warnings)]
 mod date_enums;
 pub mod localised_text;
+pub mod non_localised_text;
 
 use date_enums::*;
 use localised_text::*;
+use non_localised_text::DEFAULT_INPUT_FORMAT;
 
 use std::io::Stdin;
 pub fn get_date(input_handle: &Stdin) -> (Weekday, i32, Month, i32) {

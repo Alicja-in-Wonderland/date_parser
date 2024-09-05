@@ -1,17 +1,12 @@
 pub const INPUT_DATE_PROMPT: [&str; 2] = [
     "Give a date in numerical format W:DD:MM:YYYY (where: W - weekday, DD - day, MM - month, YYYY - year):",
-    "Podaj datę w formacie liczbowym: W:DD:MM:YYYY (gdzie TODO: THIS IS NOT FINAL)"];
+    "Podaj datę w formacie liczbowym: D:DD:MM:RRRR (gdzie: D - dzień tygodnia, DD - dzień miesiąca, MM - miesiąc, RRRR - rok)"];
 
 pub const OUTPUT_FORMAT_SELECTION_PROMPT: [&str; 2] = [
     "Choose output format: US or EU",
     "Wybiesz format daty: US (amerykański) or EU (europejski)",
 ];
 
-// TODO: this actually is not localized, should not be in module localised_text
-pub const LANGUAGE_SELECTION_PROMPT: &str =
-    "Choose interface language / Wybierz język interfejsu: EN / PL";
-pub const INPUT_ERROR: &str = "Invalid input.";
-pub const DEFAULT_INPUT_FORMAT: &str = "W:DD:MM:YYYY";
 
 pub enum Language {
     English,
