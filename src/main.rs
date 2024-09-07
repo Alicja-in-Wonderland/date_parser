@@ -11,27 +11,67 @@
 // Function std::io::stdin
 // Constructs a new handle to the standard input of the current process.
 
-use aa_date_parser::*;
+mod date;
+mod strings;
+mod user_input;
+
 use std::io::stdin;
-use crate::date_formatting::select_format;
-pub mod date_formatting;
+
+use crate::date::format::{format_date, select_format, OutputFormat};
 
 fn main() {
     let input_handle = stdin();
 
-    println!("{}", non_localised_text::LANGUAGE_SELECTION_PROMPT);
-    let language_id = get_preferred_language(&input_handle).get_id();
-
-    println!("{}", localised_text::INPUT_DATE_PROMPT[language_id]);
-    let (weekday, day, month, year) = get_date(&input_handle);
+    println!("{}", strings::non_localized::LANGUAGE_SELECTION_PROMPT);
+    let language = user_input::get_preferred_language(&input_handle);
 
     println!(
         "{}",
-        localised_text::OUTPUT_FORMAT_SELECTION_PROMPT[language_id]
+        strings::localized::INPUT_DATE_PROMPT[language as usize]
     );
-    let selected_format = select_format(input_handle);
+    let (weekday, day, month, year) = user_input::get_date(&input_handle);
 
-    
+    println!(
+        "{}",
+        strings::localized::OUTPUT_FORMAT_SELECTION_PROMPT[language as usize]
+    );
+    let date_format = select_format(input_handle);
+
+    let formatted_date = format_date(language, date_format, weekday, day, month, year);
+
     // TODO: we still have to show month and weekday in a correct format and language! and we'd like to use default formatter instead of debug one.
-    //println!("{formatted_date}");
+    println!("{}", formatted_date);
+}
+
+#[derive(Clone, Copy)]
+pub enum Language {
+    English,
+    Polish,
+}
+// impl Language {
+//     pub fn get_id(&self) -> usize {
+//         match self {
+//             Language::English => 0,
+//             Language::Polish => 1,
+//         }
+//     }
+// }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn is_usize_ok() {
+        const TEXTS: [&str; 2] = ["English", "Polish"];
+
+        assert_eq!(0 as i32, Language::English as i32);
+        assert_eq!(1 as usize, Language::Polish as usize);
+        // assert_eq!(TEXTS[0], TEXTS[Language::English.get_id()]);
+        assert_eq!(TEXTS[0], TEXTS[Language::English as usize]);
+
+        let language = Language::Polish;
+        // assert_eq!(TEXTS[1], TEXTS[language.get_id()]);
+        assert_eq!(TEXTS[1], TEXTS[language as usize]);
+    }
 }
