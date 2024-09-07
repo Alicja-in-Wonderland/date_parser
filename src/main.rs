@@ -46,7 +46,6 @@ fn main() {
         date.year,
     );
 
-    // TODO: we still have to show month and weekday in a correct format and language! and we'd like to use default formatter instead of debug one.
     println!("{}", formatted_date);
 }
 

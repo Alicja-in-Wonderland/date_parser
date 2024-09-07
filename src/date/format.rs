@@ -39,7 +39,6 @@ pub fn format_date(
     month: date::Month,
     year: i32,
 ) -> String {
-    // println!("{}", localised_text::OUTPUT_FORMAT_SELECTION_PROMPT[language_id]);
     let month = crate::strings::localized::MONTHS[language as usize][month as usize];
     let weekday = crate::strings::localized::WEEKDAYS[language as usize][weekday as usize];
     match format {

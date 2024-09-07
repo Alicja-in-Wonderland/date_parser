@@ -10,14 +10,15 @@ pub enum Weekday {
     Sat,
     Sun,
 }
-// add implementation for the enum Weekday
-// implementation = functions/methods
+
 impl Display for Weekday {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "dupa")
     }
 }
 
+// add implementation for the enum Weekday
+// implementation = functions/methods
 impl Weekday {
     // function parse(some_string) -> Weekday
     // Weekday::parse("1") -> Weekday::Monday
