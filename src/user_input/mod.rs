@@ -2,7 +2,7 @@ use std::io::Stdin;
 
 use crate::date;
 
-pub fn get_date(input_handle: &Stdin) -> (date::Weekday, i32, date::Month, i32) {
+pub fn get_date(input_handle: &Stdin) -> date::Date {
     // get date from keyboard - format: W:DD:MM:YYYY.
     let mut character_buffer = String::new();
     input_handle.read_line(&mut character_buffer);
@@ -34,7 +34,12 @@ pub fn get_date(input_handle: &Stdin) -> (date::Weekday, i32, date::Month, i32) 
         panic!("Incorrect year number: {}", year);
     }
 
-    (weekday, day, month, year)
+    date::Date {
+        weekday,
+        day,
+        month,
+        year,
+    }
 }
 
 // this function takes a reference to Stdin (standard input stream) handle

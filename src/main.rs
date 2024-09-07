@@ -29,15 +29,22 @@ fn main() {
         "{}",
         strings::localized::INPUT_DATE_PROMPT[language as usize]
     );
-    let (weekday, day, month, year) = user_input::get_date(&input_handle);
+    let date = user_input::get_date(&input_handle);
 
     println!(
         "{}",
         strings::localized::OUTPUT_FORMAT_SELECTION_PROMPT[language as usize]
     );
-    let date_format = select_format(input_handle);
+    let format = select_format(input_handle);
 
-    let formatted_date = format_date(language, date_format, weekday, day, month, year);
+    let formatted_date = format_date(
+        language,
+        format,
+        date.weekday,
+        date.day,
+        date.month,
+        date.year,
+    );
 
     // TODO: we still have to show month and weekday in a correct format and language! and we'd like to use default formatter instead of debug one.
     println!("{}", formatted_date);

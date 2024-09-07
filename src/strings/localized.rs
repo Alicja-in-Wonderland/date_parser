@@ -7,7 +7,7 @@ pub const OUTPUT_FORMAT_SELECTION_PROMPT: [&str; 2] = [
     "Wybiesz format daty: US (amerykański) or EU (europejski)",
 ];
 
-pub const WEEKDAYS: [[&str;7]; 2] = [
+pub const WEEKDAYS: [[&str; 7]; 2] = [
     [
         "Monday",
         "Tuesday",
